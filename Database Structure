@@ -1,0 +1,35 @@
+Database Structure
+
+Table: Category
+ID	Name
+
+Table: Recipe
+ID	Name	CategoryID	Description 	Servings	PreTime		TotalTime
+
+Table: Ingredients
+ID 	Name	ReceipeID
+
+Table: Directions
+ID 	Name	ReceipeID
+
+create database IF NOT EXISTS scrap;
+
+create table IF NOT EXISTS category(ID int primary key auto_increment, name varchar(50));
+
+create table IF NOT EXISTS recipe(id int primary key auto_increment, name varchar(50), category_id int not null, description varchar(200), servings varchar(10), prep_time varchar(20), total_time varchar(20), constraint foreign key(category_id) references category(ID) on delete cascade on update cascade);
+
+create table IF NOT EXISTS ingredients(id int primary key auto_increment, name varchar(100), receipe_id int not null, constraint foreign key(receipe_id) references recipe(id) on delete cascade on update cascade);
+
+create table IF NOT EXISTS directions(id int primary key auto_increment, name varchar(250), receipe_id int not null, constraint foreign key(receipe_id) references recipe(id) on delete cascade on update cascade);
+
+select category.id from category where name = "beef"
+
+//insert into recipe table with category id
+insert into recipe(name, category_id, description, servings, prep_time, total_time) values ('name', (select category.id from category where name = 'beef'), 'desc', 'servings', 'pretime', 'tottime');
+
+//insert into ingredients table
+insert into ingredients(name, recipe_id) values('name', 1);
+
+
+//insert into directions table
+insert into directions(name, recipe_id) values('name', 1);
